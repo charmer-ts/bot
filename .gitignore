@@ -1,0 +1,13 @@
+node_modules/
+dist/
+
+.vscode/
+.idea/
+
+*.log
+*.sql
+
+.env
+.env.local
+
+bun.lockb

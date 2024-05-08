@@ -1,0 +1,69 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Guild {
+  id            String         @id @default(cuid())
+  guildId       String         @unique
+  prefixes      String[]       @default(["!", "?"])
+  nameLogging   Boolean        @default(true)
+  ownerLogging  Boolean        @default(true)
+  iconLogging   Boolean        @default(true)
+  bannerLogging Boolean        @default(true)
+  createdAt     DateTime       @default(now())
+  banners       GuildBanner[]
+  commands      GuildCommand[]
+  icons         GuildIcon[]
+  names         GuildName[]
+  owners        GuildOwner[]
+}
+
+model GuildBanner {
+  id        String   @id @default(cuid())
+  banner    String
+  guildId   String
+  createdAt DateTime @default(now())
+  Guild     Guild    @relation(fields: [guildId], references: [id])
+}
+
+model GuildCommand {
+  id        String   @id @default(cuid())
+  command   String
+  executor  String
+  channel   String
+  errored   Boolean  @default(false)
+  error     String?
+  errorId   String?  @unique
+  guildId   String
+  createdAt DateTime @default(now())
+  Guild     Guild    @relation(fields: [guildId], references: [id])
+}
+
+model GuildIcon {
+  id        String   @id @default(cuid())
+  icon      String
+  guildId   String
+  createdAt DateTime @default(now())
+  Guild     Guild    @relation(fields: [guildId], references: [id])
+}
+
+model GuildName {
+  id        String   @id @default(cuid())
+  name      String
+  guildId   String
+  createdAt DateTime @default(now())
+  Guild     Guild    @relation(fields: [guildId], references: [id])
+}
+
+model GuildOwner {
+  id        String   @id @default(cuid())
+  ownerId   String
+  guildId   String
+  createdAt DateTime @default(now())
+  Guild     Guild    @relation(fields: [guildId], references: [id])
+}
