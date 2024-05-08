@@ -96,7 +96,7 @@ bun run --watch src/main.ts
 Contributions are welcome! Here are several ways you can contribute:
 
 - **[Report Issues](https://github.com/charmer-ts/bot/issues)**: Submit bugs found or log feature requests for the `charmer-ts/bot` project.
-- **[Submit Pull Requests](https://github.com/charmer-ts/bot/blob/main/CONTRIBUTING.md)**: Review open PRs, and submit your own PRs.
+- **[Submit Pull Requests](https://github.com/charmer-ts/bot/pulls)**: Review open PRs, and submit your own PRs.
 - **[Join the Discussions](https://github.com/charmer-ts/bot/discussions)**: Share your insights, provide feedback, or ask questions.
 
 
