@@ -17,12 +17,15 @@ export default class HelpCommand extends BaseCommand {
      */
 
     public async run(ctx: MessageContext): Promise<any> {
-        const commandsCategorized = ctx.client.commands.reduce((acc, command) => {
-            const category = command.data.category;
-            acc[category] = acc[category] || [];
-            acc[category].push(command);
-            return acc;
-        }, {});
+        const commandsCategorized = ctx.client.commands.reduce(
+            (acc, command) => {
+                const category = command.data.category;
+                acc[category] = acc[category] || [];
+                acc[category].push(command);
+                return acc;
+            },
+            {},
+        );
 
         const embed = new EmbedBuilder()
             .setColor(ctx.client.config.colors.transparent)
@@ -38,7 +41,9 @@ export default class HelpCommand extends BaseCommand {
 
         const pages = [embed];
 
-        for (const [category, commands] of Object.entries(commandsCategorized)) {
+        for (const [category, commands] of Object.entries(
+            commandsCategorized,
+        )) {
             const description = (commands as BaseCommand[])
                 .map((command) => `${command.data.name}`)
                 .join(', ');

@@ -7,13 +7,13 @@ import { PrismaClient } from '@prisma/client';
 export const database = new PrismaClient();
 
 export default class CoreClient extends Client<boolean> {
-    public commands: Collection<string, any> = new Collection();
+    public commands = new Collection<string, any>();
 
     public database = database;
     public config = BotConfiguration;
     public env = EnvironmentConfiguration;
 
-    public prefixCache: Collection<string, string[]> = new Collection();
+    public prefixCache = new Collection<string, string[]>();
 
     constructor() {
         super(BotConfiguration.clientOptions);

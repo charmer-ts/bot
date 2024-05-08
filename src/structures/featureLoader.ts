@@ -13,8 +13,14 @@ export default class FeatureLoader {
         const files = fs.readdirSync(path.join(__dirname, '../events'));
 
         for (const file of files) {
-            if (fs.statSync(path.join(__dirname, `../events/${file}`)).isDirectory()) {
-                const nestedFiles = fs.readdirSync(path.join(__dirname, `../events/${file}`));
+            if (
+                fs
+                    .statSync(path.join(__dirname, `../events/${file}`))
+                    .isDirectory()
+            ) {
+                const nestedFiles = fs.readdirSync(
+                    path.join(__dirname, `../events/${file}`),
+                );
                 for (const nestedFile of nestedFiles) {
                     eventFiles.push(`${file}/${nestedFile}` as never);
                 }
@@ -40,7 +46,9 @@ export default class FeatureLoader {
         const categories = fs.readdirSync(path.join(__dirname, '../commands'));
 
         for (const category of categories) {
-            const files = fs.readdirSync(path.join(__dirname, `../commands/${category}`));
+            const files = fs.readdirSync(
+                path.join(__dirname, `../commands/${category}`),
+            );
             for (const file of files) {
                 commandFiles.push(`${category}/${file}` as never);
             }

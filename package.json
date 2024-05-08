@@ -1,28 +1,33 @@
 {
-  "name": "discord-bot",
-  "version": "1.0.0",
-  "author": "discord: feenko",
-  "keywords": [
-    "discord",
-    "discordjs",
-    "discord-bot",
-    "discord-typescript-bot",
-    "discord-js",
-    "discord-js-bot",
-    "discordjs-bot"
-  ],
-  "dependencies": {
-    "@prisma/client": "^5.13.0",
-    "discord.js": "^14.15.2",
-    "dotenv": "^16.4.5"
-  },
-  "scripts": {
-    "start": "bun run src/mainn.ts",
-    "dev": "bun run --watch src/main.ts",
-    "migrate": "npx prisma migrate dev --name feature"
-  },
-  "devDependencies": {
-    "prisma": "^5.13.0"
-  },
-  "license": "MIT"
+    "name": "discord-bot",
+    "version": "1.0.0",
+    "author": "discord: feenko",
+    "keywords": [
+        "discord",
+        "discordjs",
+        "discord-bot",
+        "discord-typescript-bot",
+        "discord-js",
+        "discord-js-bot",
+        "discordjs-bot"
+    ],
+    "dependencies": {
+        "@prisma/client": "^5.13.0",
+        "discord.js": "^14.15.2",
+        "dotenv": "^16.4.5"
+    },
+    "scripts": {
+        "start": "bun run src/mainn.ts",
+        "dev": "bun run --watch src/main.ts",
+        "migrate": "npx prisma migrate dev --name feature",
+        "format": "npx prettier --write . && npx eslint --fix src"
+    },
+    "devDependencies": {
+        "@eslint/js": "^9.2.0",
+        "eslint": "^8.57.0",
+        "prisma": "^5.13.0",
+        "typescript": "^5.4.5",
+        "typescript-eslint": "^7.8.0"
+    },
+    "license": "MIT"
 }

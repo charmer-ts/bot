@@ -24,17 +24,24 @@ export default class CommandRunEvents extends BaseEvent {
         const prefixes = guildInfo!.prefixes;
         if (!prefixes) return;
 
-        const prefixUsed = prefixes.find((prefix) => message.content.startsWith(prefix));
+        const prefixUsed = prefixes.find((prefix) =>
+            message.content.startsWith(prefix),
+        );
         if (!prefixUsed) return;
 
-        const args = message.content.slice(prefixUsed.length).trim().split(/ +/);
+        const args = message.content
+            .slice(prefixUsed.length)
+            .trim()
+            .split(/ +/);
         const commandName = args.shift()?.toLowerCase();
 
         if (!commandName) return;
 
         const command =
             this.client.commands.get(commandName) ||
-            this.client.commands.find((cmd) => cmd.data.aliases.includes(commandName));
+            this.client.commands.find((cmd) =>
+                cmd.data.aliases.includes(commandName),
+            );
         if (!command) return;
 
         const ctx = new MessageContext(this.client, message, args);

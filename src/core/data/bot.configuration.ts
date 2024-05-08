@@ -1,11 +1,19 @@
-import { ActivityType, ClientOptions, Colors, GatewayIntentBits, Partials } from 'discord.js';
+import {
+    ActivityType,
+    ClientOptions,
+    Colors,
+    GatewayIntentBits,
+    Partials,
+} from 'discord.js';
 import BaseConfiguration from '../../structures/baseConfiguration';
 
 export default class BotConfiguration extends BaseConfiguration {
     public static token: string = process.env.TOKEN!;
 
     public static clientOptions: ClientOptions = {
-        intents: Object.values(GatewayIntentBits).map((bit) => bit) as GatewayIntentBits[],
+        intents: Object.values(GatewayIntentBits).map(
+            (bit) => bit,
+        ) as GatewayIntentBits[],
         partials: Object.values(Partials).map((bit) => bit) as Partials[],
         allowedMentions: {
             repliedUser: false,
@@ -30,9 +38,12 @@ export default class BotConfiguration extends BaseConfiguration {
     };
 
     public static emojis = {
-        paginationPrevious: process.env.EMOTE_PREVIOUS || '<:left:1207660256256073728>',
-        paginationClose: process.env.EMOTE_CLOSE || '<:close:1207660254247129088>',
-        paginationNext: process.env.EMOTE_NEXT || '<:right:1207660252741374032>',
+        paginationPrevious:
+            process.env.EMOTE_PREVIOUS || '<:left:1207660256256073728>',
+        paginationClose:
+            process.env.EMOTE_CLOSE || '<:close:1207660254247129088>',
+        paginationNext:
+            process.env.EMOTE_NEXT || '<:right:1207660252741374032>',
         paginationJump: process.env.EMOTE_JUMP || '<:sort:1207660871166468196>',
     };
 }

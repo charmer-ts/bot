@@ -2,7 +2,7 @@ import { PermissionResolvable } from 'discord.js';
 import { client } from '../main';
 import { MessageContext } from './context';
 
-type commandData = {
+interface commandData {
     name: string;
     description?: string;
     aliases?: string[];
@@ -11,7 +11,7 @@ type commandData = {
     botPermissions?: PermissionResolvable[];
 
     category?: string;
-};
+}
 
 export default class BaseCommand {
     public data: commandData;

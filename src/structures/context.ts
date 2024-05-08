@@ -2,7 +2,6 @@ import {
     ActionRowBuilder,
     ButtonBuilder,
     ButtonStyle,
-    ComponentType,
     EmbedBuilder,
     Message,
     ModalBuilder,
@@ -16,7 +15,11 @@ export class MessageContext {
     public send: (content: string | any) => Promise<Message>;
     public author: Message['author'];
 
-    constructor(public client: CoreClient, public message: Message, public args: string[]) {
+    constructor(
+        public client: CoreClient,
+        public message: Message,
+        public args: string[],
+    ) {
         this.reply = message.reply.bind(message);
         this.send = message.channel.send.bind(message.channel);
         this.author = message.author;
@@ -43,7 +46,8 @@ export class MessageContext {
         const mention = user.match(/<@!?(\d+)>/);
         if (mention) id = mention[1];
 
-        if (this.client.users.cache.has(id)) return this.client.users.cache.get(id);
+        if (this.client.users.cache.has(id))
+            return this.client.users.cache.get(id);
         else return await this.client.users.fetch(id);
     }
 
@@ -70,8 +74,8 @@ export class MessageContext {
         const cachedChannel = this.message.guild?.channels.cache.get(channel);
         if (cachedChannel) return cachedChannel;
 
-        const cachedChannelByName = this.message.guild?.channels.cache.find((c) =>
-            c.name.toLowerCase().includes(channel.toLowerCase()),
+        const cachedChannelByName = this.message.guild?.channels.cache.find(
+            (c) => c.name.toLowerCase().includes(channel.toLowerCase()),
         );
         if (cachedChannelByName) return cachedChannelByName;
 
@@ -128,7 +132,10 @@ export class MessageContext {
 
         const message =
             type === 'text'
-                ? await this.reply({ content: pages[currentPage] as string, components: [row] })
+                ? await this.reply({
+                      content: pages[currentPage] as string,
+                      components: [row],
+                  })
                 : await this.reply({
                       embeds: [pages[currentPage] as EmbedBuilder],
                       components: [row],
@@ -139,8 +146,10 @@ export class MessageContext {
         });
 
         collector.on('collect', async (interaction) => {
-            if (interaction.user.id !== this.author.id) return await interaction.deferUpdate();
-            if (interaction.customId !== 'jump') await interaction.deferUpdate();
+            if (interaction.user.id !== this.author.id)
+                return await interaction.deferUpdate();
+            if (interaction.customId !== 'jump')
+                await interaction.deferUpdate();
 
             if (interaction.customId === 'previous') {
                 if (currentPage === 0) return;
@@ -149,16 +158,22 @@ export class MessageContext {
                 if (currentPage === pages.length - 1) return;
                 currentPage++;
             } else if (interaction.customId === 'jump') {
-                const modal = new ModalBuilder().setCustomId('jump_modal').setTitle('Jump to Page');
+                const modal = new ModalBuilder()
+                    .setCustomId('jump_modal')
+                    .setTitle('Jump to Page');
 
                 const pageInput = new TextInputBuilder()
                     .setCustomId('page_input')
-                    .setPlaceholder(`Enter a page number between 1 and ${pages.length}`)
+                    .setPlaceholder(
+                        `Enter a page number between 1 and ${pages.length}`,
+                    )
                     .setLabel('Page Number')
                     .setRequired(true)
                     .setStyle(TextInputStyle.Short);
 
-                const row: any = new ActionRowBuilder().addComponents(pageInput);
+                const row: any = new ActionRowBuilder().addComponents(
+                    pageInput,
+                );
                 modal.addComponents(row);
 
                 await interaction.showModal(modal);
@@ -171,7 +186,9 @@ export class MessageContext {
 
                 if (!modalResponse) return;
 
-                const page = parseInt(modalResponse.fields.getTextInputValue('page_input'));
+                const page = parseInt(
+                    modalResponse.fields.getTextInputValue('page_input'),
+                );
 
                 if (isNaN(page) || page < 1 || page > pages.length) {
                     return interaction.reply({
@@ -189,17 +206,26 @@ export class MessageContext {
                 return this.message.react('👋');
             }
 
-            if (type === 'text') await interaction.editReply(pages[currentPage] as string);
-            else await interaction.editReply({ embeds: [pages[currentPage] as EmbedBuilder] });
+            if (type === 'text')
+                await interaction.editReply(pages[currentPage] as string);
+            else
+                await interaction.editReply({
+                    embeds: [pages[currentPage] as EmbedBuilder],
+                });
         });
 
         collector.on('end', async (_, reason) => {
             if (reason === 'exit_button') return;
 
-            row.components.forEach((btn: ButtonBuilder) => btn.setDisabled(true));
+            row.components.forEach((btn: ButtonBuilder) =>
+                btn.setDisabled(true),
+            );
 
             if (type === 'text')
-                await message.edit({ content: pages[currentPage] as string, components: [row] });
+                await message.edit({
+                    content: pages[currentPage] as string,
+                    components: [row],
+                });
             else
                 await message.edit({
                     embeds: [pages[currentPage] as EmbedBuilder],
