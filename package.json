@@ -17,8 +17,9 @@
         "dotenv": "^16.4.5"
     },
     "scripts": {
-        "start": "bun run src/mainn.ts",
+        "start": "bun run src/main.ts",
         "dev": "bun run --watch src/main.ts",
+        "watch": "bun run --watch src/main.ts",
         "migrate": "npx prisma migrate dev --name feature",
         "format": "npx prettier --write . && npx eslint --fix src"
     },

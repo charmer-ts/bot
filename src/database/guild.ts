@@ -73,3 +73,41 @@ export async function createGuild(
         return null;
     }
 }
+
+export async function addGuildPrefix(guildId: string, prefix: string) {
+    try {
+        const result = await database.guild.update({
+            where: {
+                guildId,
+            },
+            data: {
+                prefixes: {
+                    push: prefix,
+                },
+            },
+        });
+
+        return result;
+    } catch {
+        return null;
+    }
+}
+
+export async function setGuildPrefixes(guildId: string, prefixes: string[]) {
+    try {
+        const result = await database.guild.update({
+            where: {
+                guildId,
+            },
+            data: {
+                prefixes: {
+                    set: prefixes,
+                },
+            },
+        });
+
+        return result;
+    } catch {
+        return null;
+    }
+}

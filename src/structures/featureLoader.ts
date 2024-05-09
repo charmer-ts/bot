@@ -65,7 +65,7 @@ export default class FeatureLoader {
             const commandInstance = new command.default();
             const commandCategory = (file as string).split('/')[0];
 
-            const commandData = {
+            let commandData = {
                 ...commandInstance.data,
                 category: commandCategory,
             };
@@ -74,5 +74,13 @@ export default class FeatureLoader {
 
             client.commands.set(commandInstance.data.name, commandInstance);
         }
+    }
+
+    public async reloadAll() {
+        client.commands.clear();
+        this.loadCommands();
+
+        client.removeAllListeners();
+        this.loadEvents();
     }
 }
