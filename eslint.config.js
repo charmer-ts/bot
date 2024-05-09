@@ -12,6 +12,7 @@ module.exports = tseslint.config(
             '@typescript-eslint/no-unused-vars': 'off',
             '@typescript-eslint/no-non-null-assertion': 'off',
             '@typescript-eslint/no-dynamic-delete': 'off',
+            'no-case-declarations': 'off',
         },
     },
 );

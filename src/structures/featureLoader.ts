@@ -65,7 +65,7 @@ export default class FeatureLoader {
             const commandInstance = new command.default();
             const commandCategory = (file as string).split('/')[0];
 
-            let commandData = {
+            const commandData = {
                 ...commandInstance.data,
                 category: commandCategory,
             };
