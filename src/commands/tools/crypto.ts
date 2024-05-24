@@ -13,7 +13,8 @@ export default class PollCommand extends BaseCommand {
 
         this.data.commands?.push({
             name: 'hash',
-            description: 'hash a string\nsupported algorithms: md5, sha1, sha256, sha512, sha3-512',
+            description:
+                'hash a string\nsupported algorithms: md5, sha1, sha256, sha512, sha3-512',
             options: [
                 {
                     name: 'algorithm',
@@ -79,7 +80,9 @@ export default class PollCommand extends BaseCommand {
 
         const hash = crypto.createHash(algorithm).update(string).digest('hex');
 
-        return ctx.say(`\`\`\`ansi\n[1;2m[1;33mHash:[0m[1;33m[0m[0m\n${hash}\`\`\``);
+        return ctx.say(
+            `\`\`\`ansi\n[1;2m[1;33mHash:[0m[1;33m[0m[0m\n${hash}\`\`\``,
+        );
     }
 
     public async bytes(ctx: MessageContext) {
@@ -91,6 +94,8 @@ export default class PollCommand extends BaseCommand {
 
         const bytes = crypto.randomBytes(length);
 
-        return ctx.say(`\`\`\`ansi\n[1;2m[1;33mBytes:[0m[1;33m[0m[0m\n${bytes.toString('hex')}\`\`\``);
+        return ctx.say(
+            `\`\`\`ansi\n[1;2m[1;33mBytes:[0m[1;33m[0m[0m\n${bytes.toString('hex')}\`\`\``,
+        );
     }
 }

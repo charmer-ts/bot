@@ -49,6 +49,7 @@ export default class MembersCommand extends BaseCommand {
                         (a, b) =>
                             a.user.createdTimestamp - b.user.createdTimestamp,
                     );
+                    break;
                 }
 
                 /**
@@ -60,6 +61,7 @@ export default class MembersCommand extends BaseCommand {
                     members = members.filter((m) =>
                         regex.test(m.user.username),
                     );
+                    break;
                 }
 
                 case 'show:admins':
@@ -69,6 +71,7 @@ export default class MembersCommand extends BaseCommand {
                             m.permissions.has('ManageGuild') ||
                             m.permissions.has('Administrator'),
                     );
+                    break;
                 }
             }
         }

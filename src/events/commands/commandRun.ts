@@ -96,7 +96,7 @@ export default class CommandRunEvents extends BaseEvent {
             const options = command?.data?.options || command?.options;
 
             for (const option of options) {
-                let isLastOption =
+                const isLastOption =
                     options.indexOf(option) === options.length - 1;
 
                 const arg = args.shift();

@@ -148,7 +148,7 @@ export default class UserinfoCommand extends BaseCommand {
                     ].join('\n'),
                 },
             ]);
-            
+
         embeds.push(embed_links);
 
         return ctx.paginate(embeds);
