@@ -96,6 +96,9 @@ export default class CommandRunEvents extends BaseEvent {
             const options = command?.data?.options || command?.options;
 
             for (const option of options) {
+                let isLastOption =
+                    options.indexOf(option) === options.length - 1;
+
                 const arg = args.shift();
 
                 const usage = options
@@ -119,9 +122,27 @@ export default class CommandRunEvents extends BaseEvent {
                 if (arg) {
                     switch (option.type) {
                         case CommandOptionType.String:
-                            ctx.options[option.name] = `${arg} ${args.join(
-                                ' ',
-                            )}`.trimEnd();
+                            const choices = option.choices?.map(
+                                (choice) => choice.name,
+                            );
+
+                            if (choices && !choices.includes(arg)) {
+                                return ctx.say(
+                                    `argument at position ${
+                                        args.indexOf(arg) + 1
+                                    } is not a valid choice\n- allowed choices: ${choices.join(
+                                        ', ',
+                                    )}`,
+                                );
+                            }
+
+                            if (isLastOption) {
+                                ctx.options[option.name] = `${arg} ${args.join(
+                                    ' ',
+                                )}`.trimEnd();
+                            } else {
+                                ctx.options[option.name] = arg;
+                            }
                             break;
                         case CommandOptionType.Integer:
                             ctx.options[option.name] = parseInt(arg);
@@ -151,27 +172,37 @@ export default class CommandRunEvents extends BaseEvent {
                             break;
                         case CommandOptionType.User:
                             ctx.options[option.name] = await ctx.resolveUser(
-                                `${arg} ${args.join(' ')}`.trimEnd(),
+                                isLastOption
+                                    ? `${arg} ${args.join(' ')}`.trimEnd()
+                                    : arg.trimEnd(),
                             );
                             break;
                         case CommandOptionType.Member:
                             ctx.options[option.name] = await ctx.resolveMember(
-                                `${arg} ${args.join(' ')}`.trimEnd(),
+                                isLastOption
+                                    ? `${arg} ${args.join(' ')}`.trimEnd()
+                                    : arg.trimEnd(),
                             );
                             break;
                         case CommandOptionType.Channel:
                             ctx.options[option.name] = await ctx.resolveChannel(
-                                `${arg} ${args.join(' ')}`.trimEnd(),
+                                isLastOption
+                                    ? `${arg} ${args.join(' ')}`.trimEnd()
+                                    : arg.trimEnd(),
                             );
                             break;
                         case CommandOptionType.Role:
                             ctx.options[option.name] = await ctx.resolveRole(
-                                `${arg} ${args.join(' ')}`.trimEnd(),
+                                isLastOption
+                                    ? `${arg} ${args.join(' ')}`.trimEnd()
+                                    : arg.trimEnd(),
                             );
                             break;
                         case CommandOptionType.Server:
                             ctx.options[option.name] = await ctx.resolveGuild(
-                                `${arg} ${args.join(' ')}`.trimEnd(),
+                                isLastOption
+                                    ? `${arg} ${args.join(' ')}`.trimEnd()
+                                    : arg.trimEnd(),
                             );
                             break;
                     }
