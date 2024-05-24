@@ -13,8 +13,6 @@ export default class CoreClient extends Client<boolean> {
     public config = BotConfiguration;
     public env = EnvironmentConfiguration;
 
-    public prefixCache = new Collection<string, string[]>();
-
     constructor() {
         super(BotConfiguration.clientOptions);
     }
