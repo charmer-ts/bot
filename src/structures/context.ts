@@ -75,7 +75,7 @@ export class MessageContext {
 
         if (this.client.users.cache.has(id))
             return this.client.users.cache.get(id);
-        else return await this.client.users.fetch(id);
+        else return await this.client.users.fetch(id).catch(() => null);
     }
 
     public async resolveMember(member: string) {
@@ -94,7 +94,7 @@ export class MessageContext {
 
         if (this.message.guild?.members.cache.has(id))
             return this.message.guild?.members.cache.get(id);
-        else return await this.client.users.fetch(id);
+        else return await this.client.users.fetch(id).catch(() => null);
     }
 
     public async resolveChannel(channel: string) {
@@ -113,7 +113,7 @@ export class MessageContext {
 
         if (this.message.guild?.channels.cache.has(id))
             return this.message.guild?.channels.cache.get(id);
-        else return await this.client.channels.fetch(id);
+        else return await this.client.channels.fetch(id).catch(() => null);
     }
 
     public async resolveRole(role: string) {
@@ -132,7 +132,7 @@ export class MessageContext {
 
         if (this.message.guild?.roles.cache.has(id))
             return this.message.guild?.roles.cache.get(id);
-        else return await this.message.guild?.roles.fetch(id);
+        else return await this.message.guild?.roles.fetch(id).catch(() => null);
     }
 
     public async resolveGuild(guild: string) {
@@ -151,7 +151,7 @@ export class MessageContext {
 
         if (this.client.guilds.cache.has(id))
             return this.client.guilds.cache.get(id);
-        else return await this.client.guilds.fetch(id);
+        else return await this.client.guilds.fetch(id).catch(() => null);
     }
 
     public async paginate(

@@ -7,7 +7,7 @@ export default class PrefixCommands extends BaseCommand {
     constructor() {
         super({
             name: 'prefix',
-            description: 'Change the prefix of the bot',
+            description: 'change the prefix of the bot',
             category: 'config',
             aliases: ['setprefix'],
             permissions: ['ManageGuild'],
@@ -17,11 +17,11 @@ export default class PrefixCommands extends BaseCommand {
         this.data.commands?.push({
             name: 'add',
             aliases: ['create', 'new'],
-            description: 'Add a new prefix',
+            description: 'add a new prefix',
             options: [
                 {
                     name: 'prefix',
-                    description: 'The prefix to add',
+                    description: 'the prefix to add',
                     type: CommandOptionType.String,
                     required: true,
                 },
@@ -32,11 +32,11 @@ export default class PrefixCommands extends BaseCommand {
         this.data.commands?.push({
             name: 'remove',
             aliases: ['delete', 'del', 'rm', 'rem'],
-            description: 'Remove a prefix',
+            description: 'remove a prefix',
             options: [
                 {
                     name: 'prefix',
-                    description: 'The prefix to remove',
+                    description: 'the prefix to remove',
                     type: CommandOptionType.String,
                     required: true,
                 },
@@ -47,11 +47,11 @@ export default class PrefixCommands extends BaseCommand {
         this.data.commands?.push({
             name: 'set',
             aliases: ['overwrite'],
-            description: 'Overwrite all prefixes and set a new one',
+            description: 'overwrite all prefixes and set a new one',
             options: [
                 {
                     name: 'prefix',
-                    description: 'The new prefix',
+                    description: 'the new prefix',
                     type: CommandOptionType.String,
                     required: true,
                 },
@@ -62,11 +62,11 @@ export default class PrefixCommands extends BaseCommand {
         this.data.commands?.push({
             name: 'validate',
             aliases: ['check', 'verify', 'test'],
-            description: 'Check if a prefix is valid',
+            description: 'check if a prefix is valid',
             options: [
                 {
                     name: 'prefix',
-                    description: 'The prefix to validate',
+                    description: 'the prefix to validate',
                     type: CommandOptionType.String,
                     required: true,
                 },
@@ -77,7 +77,7 @@ export default class PrefixCommands extends BaseCommand {
         this.data.commands?.push({
             name: 'reset',
             aliases: ['clear'],
-            description: 'Reset all prefixes',
+            description: 'reset all prefixes',
             run: this.resetPrefixes.bind(this),
         });
     }
