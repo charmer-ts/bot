@@ -109,9 +109,9 @@ export default class CommandRunEvents extends BaseEvent {
                     )
                     .join(' ');
 
-                const fullCommandName = `${prefixUsed}${commandName} ${
-                    command?.name || ''
-                } ${usage}`.trim();
+                const fullCommandName = `${prefixUsed}${commandName}${
+                    command?.name ? `${command?.name} ` : ''
+                } ${(usage as string).trim()}`.trim();
 
                 if (!arg && option.required) {
                     return ctx.say(
@@ -176,6 +176,8 @@ export default class CommandRunEvents extends BaseEvent {
                                     ? `${arg} ${args.join(' ')}`.trimEnd()
                                     : arg.trimEnd(),
                             );
+                            if (!ctx.options[option.name])
+                                return ctx.say('User not found');
                             break;
                         case CommandOptionType.Member:
                             ctx.options[option.name] = await ctx.resolveMember(
@@ -183,6 +185,8 @@ export default class CommandRunEvents extends BaseEvent {
                                     ? `${arg} ${args.join(' ')}`.trimEnd()
                                     : arg.trimEnd(),
                             );
+                            if (!ctx.options[option.name])
+                                return ctx.say('Member not found');
                             break;
                         case CommandOptionType.Channel:
                             ctx.options[option.name] = await ctx.resolveChannel(
@@ -190,6 +194,8 @@ export default class CommandRunEvents extends BaseEvent {
                                     ? `${arg} ${args.join(' ')}`.trimEnd()
                                     : arg.trimEnd(),
                             );
+                            if (!ctx.options[option.name])
+                                return ctx.say('Channel not found');
                             break;
                         case CommandOptionType.Role:
                             ctx.options[option.name] = await ctx.resolveRole(
@@ -197,6 +203,8 @@ export default class CommandRunEvents extends BaseEvent {
                                     ? `${arg} ${args.join(' ')}`.trimEnd()
                                     : arg.trimEnd(),
                             );
+                            if (!ctx.options[option.name])
+                                return ctx.say('Role not found');
                             break;
                         case CommandOptionType.Server:
                             ctx.options[option.name] = await ctx.resolveGuild(
@@ -204,6 +212,8 @@ export default class CommandRunEvents extends BaseEvent {
                                     ? `${arg} ${args.join(' ')}`.trimEnd()
                                     : arg.trimEnd(),
                             );
+                            if (!ctx.options[option.name])
+                                return ctx.say('Server not found');
                             break;
                     }
                 }
@@ -214,5 +224,13 @@ export default class CommandRunEvents extends BaseEvent {
         if (!checkResult) return;
 
         await command.run(ctx);
+    }
+
+    async on_messageUpdate(
+        oldMessage: Message<boolean>,
+        newMessage: Message<boolean>,
+    ) {
+        if (oldMessage.content === newMessage.content) return;
+        this.on_messageCreate(newMessage);
     }
 }

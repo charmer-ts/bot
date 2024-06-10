@@ -8,7 +8,7 @@ export default class MembersCommand extends BaseCommand {
             name: 'members',
             aliases: ['users'],
             description:
-                'get the members of the server\n- filters: `show:bots`, `show:humans`, `sortBy:created`',
+                'get the members of the server\n- filters: `show:bots`, `show:humans`, `show:admins`, `sortby:created`',
             permissions: ['ManageGuild'],
             options: [
                 {
@@ -20,6 +20,13 @@ export default class MembersCommand extends BaseCommand {
             ],
         });
     }
+
+    public filters = [
+        'show:bots',
+        'show:humans',
+        'show:admins',
+        'sortBy:created',
+    ];
 
     public async run(ctx: MessageContext) {
         await ctx.message.guild?.members.fetch().catch(() => null);
@@ -44,32 +51,20 @@ export default class MembersCommand extends BaseCommand {
                     break;
                 }
 
-                case 'sortby:created': {
-                    members = members.sort(
-                        (a, b) =>
-                            a.user.createdTimestamp - b.user.createdTimestamp,
-                    );
-                    break;
-                }
-
-                /**
-                 * Each member that username ends with a 5 digit number (e.g. _12345)
-                 * Those accounts are usually suspicious
-                 */
-                case 'show:suspicous': {
-                    const regex = /_\d{5}$/;
-                    members = members.filter((m) =>
-                        regex.test(m.user.username),
-                    );
-                    break;
-                }
-
                 case 'show:admins':
                 case 'show:admin': {
                     members = members.filter(
                         (m) =>
                             m.permissions.has('ManageGuild') ||
                             m.permissions.has('Administrator'),
+                    );
+                    break;
+                }
+
+                case 'sortby:created': {
+                    members = members.sort(
+                        (a, b) =>
+                            a.user.createdTimestamp - b.user.createdTimestamp,
                     );
                     break;
                 }
@@ -93,9 +88,12 @@ export default class MembersCommand extends BaseCommand {
                     iconURL: ctx.author.avatarURL()!,
                 })
                 .setTitle(`Members of ${ctx.message.guild?.name}`)
+                .setDescription(
+                    `Applied filters: ${filtersArray?.join(', ') || 'none'}`,
+                )
                 .addFields([
                     {
-                        name: '** **',
+                        name: `** **`,
                         value: chunk
                             .slice(0, 5)
                             .map((m) => `- ${m.user.username}`)
